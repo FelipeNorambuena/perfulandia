@@ -1,0 +1,961 @@
+{
+	"info": {
+		"_postman_id": "289d2d40-e4d8-4a4c-a1e2-7c927d952c87",
+		"name": "Perfumeria",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43543231",
+		"_collection_link": "https://felipenorambuena.postman.co/workspace/Felipe-norambuena's-Workspace~b06c88be-7461-4115-897d-b85262da035b/collection/43543231-289d2d40-e4d8-4a4c-a1e2-7c927d952c87?action=share&source=collection_link&creator=43543231"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Post Cliente",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombreUsuario\": \"felipe\",\r\n  \"email\": \"juanb@example.com\",\r\n  \"contrasena\": \"1234\",\r\n  \"rol\": \"cliente\",\r\n  \"estado\": \"activo\",\r\n  \"nombreCompleto\": \"Juan Bustos\",\r\n  \"rut\": \"12.345.678-9\",\r\n  \"direccion\": \"Av. Siempre Viva 123\",\r\n  \"telefono\": \"+56911112222\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Vendedor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombreUsuario\": \"vendedor01\",\r\n  \"email\": \"vendedor01@ejemplo.com\",\r\n  \"contrasena\": \"abc123\",\r\n  \"rol\": \"vendedor\",\r\n  \"estado\": \"activo\",\r\n  \"nombreCompleto\": \"Camila Pérez\",\r\n  \"rut\": \"11.223.334-5\",\r\n  \"telefono\": \"+56911110000\",\r\n  \"areaVentas\": \"Región Metropolitana\",\r\n  \"direccion\": null\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombreUsuario\": \"admin01\",\r\n  \"email\": \"admin01@ejemplo.com\",\r\n  \"contrasena\": \"adminpass\",\r\n  \"rol\": \"admin\",\r\n  \"estado\": \"activo\",\r\n  \"nombreCompleto\": null,\r\n  \"rut\": null,\r\n  \"telefono\": null,\r\n  \"areaVentas\": null,\r\n  \"direccion\": null\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Api Gateway",
+			"item": [
+				{
+					"name": "Ping",
+					"item": [
+						{
+							"name": "Ping",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/ping",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"ping"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Usuarios",
+					"item": [
+						{
+							"name": "Login Gateway",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjAxIiwidXNlcm5hbWUiOiJhZG1pbjAxIiwicm9sIjoiYWRtaW4iLCJpYXQiOjE3NDkyNDE2NDQsImV4cCI6MTc0OTMyODA0NH0.-sLfdX7jNV52Yz9m2kQZmKk5AWkqQv06q6uIs33ZHo_p2f1mUPiny10IEHn_B2keVoidyede7FjURTYm_Mwv8A",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombreUsuario\": \"vendedor01\",\r\n  \"contrasena\": \"abc123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8888/api/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Usuarios",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/usuarios",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"usuarios"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Usuarios ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2ZW5kZWRvcjAxIiwidXNlcm5hbWUiOiJ2ZW5kZWRvcjAxIiwicm9sIjoidmVuZGVkb3IiLCJpYXQiOjE3NDkxODAxMzMsImV4cCI6MTc0OTI2NjUzM30.wGk5HzwDgoLxZ67DfJOiWy2tR_VtssmuDhQjnM1viAN3p4EvMz42dLz5Dw0TOyt-Zz83vn1EesjKSkDi1gFXtw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/usuarios/8",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"usuarios",
+										"8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Usuario ID SOLO ADMIN",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/usuarios/14",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"usuarios",
+										"14"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Productos",
+					"item": [
+						{
+							"name": "Post Producto",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2ZW5kZWRvcjAxIiwidXNlcm5hbWUiOiJ2ZW5kZWRvcjAxIiwicm9sIjoidmVuZGVkb3IiLCJpYXQiOjE3NDkxNzkxNTQsImV4cCI6MTc0OTI2NTU1NH0.4ByOiMiJMCzck4ssaK_efgRcyKaC6QpB5nXV1-qU4K-7Mn_0x-Lwovmp3b3627WlN5UWmy_HeCwSlYeIivhQ4w",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"esika\",\r\n  \"descripcion\": \"fragancia macho pelo en el pecho\",\r\n  \"precioUnitario\": 10000,\r\n  \"stock\": 25,\r\n  \"categoria\": \"macho\",\r\n  \"activo\": true\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/productos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"productos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Productos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/productos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"productos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Productos ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2ZW5kZWRvcjAxIiwidXNlcm5hbWUiOiJ2ZW5kZWRvcjAxIiwicm9sIjoidmVuZGVkb3IiLCJpYXQiOjE3NDkxNzkxNTQsImV4cCI6MTc0OTI2NTU1NH0.4ByOiMiJMCzck4ssaK_efgRcyKaC6QpB5nXV1-qU4K-7Mn_0x-Lwovmp3b3627WlN5UWmy_HeCwSlYeIivhQ4w",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/productos/9",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"productos",
+										"9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Producto ID SOLO ADMIN",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjAxIiwidXNlcm5hbWUiOiJhZG1pbjAxIiwicm9sIjoiYWRtaW4iLCJpYXQiOjE3NDkxODAzMTEsImV4cCI6MTc0OTI2NjcxMX0.WXjtNESG_OdlqJy_QkYPCtNHl1vznncfhI2vVmo_F_erWX9oFvcRZ61p6hLTkpVnbVt2pl1o3wabk1mwATo1DQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/productos/9",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"productos",
+										"9"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Clientes",
+					"item": [
+						{
+							"name": "Post Clientes",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2wiOiJhZG1pbiIsImlhdCI6MTc0OTAxNTg4NywiZXhwIjoxNzQ5MTAyMjg3fQ.dh7XX3RyG9sNfCTqlGCWXGZ3e8dVjmG6OQH8VO9l4Y2PqB5KqnjI4DMhrgZSRP0BOEcsKO19gFZXV41pp8d_PQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"Laptop Gamer\",\r\n  \"descripcion\": \"Laptop con procesador Intel i7 y 16GB RAM\",\r\n  \"precioUnitario\": 1199900,\r\n  \"stock\": 25,\r\n  \"categoria\": \"Tecnología\",\r\n  \"activo\": true\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/clientes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"clientes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Clientes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/clientes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"clientes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Cliente ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjAxIiwidXNlcm5hbWUiOiJhZG1pbjAxIiwicm9sIjoiYWRtaW4iLCJpYXQiOjE3NDgyNDE1MjAsImV4cCI6MTc0ODMyNzkyMH0.kX1ZJ4X1mqb_OVF2oP_n1PnkzMJk72uwTq3pD3VQrxRSqK3RC6bbbF9p6pjwiewPTB_D-8nRj2bJ3F3d_rqd6g",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/clientes/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"clientes",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Cliente ID SOLO ADMIN",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/clientes/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"clientes",
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Api Inventario",
+					"item": [
+						{
+							"name": "Consultar inventario",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2wiOiJhZG1pbiIsImlhdCI6MTc0OTAxNTg4NywiZXhwIjoxNzQ5MTAyMjg3fQ.dh7XX3RyG9sNfCTqlGCWXGZ3e8dVjmG6OQH8VO9l4Y2PqB5KqnjI4DMhrgZSRP0BOEcsKO19gFZXV41pp8d_PQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"Laptop Gamer\",\r\n  \"descripcion\": \"Laptop con procesador Intel i7 y 16GB RAM\",\r\n  \"precioUnitario\": 1199900,\r\n  \"stock\": 25,\r\n  \"categoria\": \"Tecnología\",\r\n  \"activo\": true\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/inventario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"inventario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar inventario por ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjAxIiwidXNlcm5hbWUiOiJhZG1pbjAxIiwicm9sIjoiYWRtaW4iLCJpYXQiOjE3NDkxODQwODIsImV4cCI6MTc0OTI3MDQ4Mn0.NINq8auBDVQkXjMmiGeHhiqhfdJoqyMMX7dWoYHeBfRgIbFkQ0bCvoWnbdna6HVYVeXDY2-9_-e3HfaqOAH1Ug",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/inventario/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"inventario",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Crear inventario",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjAxIiwidXNlcm5hbWUiOiJhZG1pbjAxIiwicm9sIjoiYWRtaW4iLCJpYXQiOjE3NDkxODQwODIsImV4cCI6MTc0OTI3MDQ4Mn0.NINq8auBDVQkXjMmiGeHhiqhfdJoqyMMX7dWoYHeBfRgIbFkQ0bCvoWnbdna6HVYVeXDY2-9_-e3HfaqOAH1Ug",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id_producto\": 10,\r\n  \"stock_disponible\": 250,\r\n  \"ubicacion_bodega\": \"zona sur\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/inventario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"inventario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajustar inventario por ID",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id_producto\": 3,\r\n        \"stock_disponible\": 100,\r\n        \"ubicacion_bodega\": \"bodega Norte\"\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/inventario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"inventario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar inventario por ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjAxIiwidXNlcm5hbWUiOiJhZG1pbjAxIiwicm9sIjoiYWRtaW4iLCJpYXQiOjE3NDkxODQwODIsImV4cCI6MTc0OTI3MDQ4Mn0.NINq8auBDVQkXjMmiGeHhiqhfdJoqyMMX7dWoYHeBfRgIbFkQ0bCvoWnbdna6HVYVeXDY2-9_-e3HfaqOAH1Ug",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/inventario/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"inventario",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Api Envios",
+					"item": [
+						{
+							"name": "Consultar todos los envios",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjAxIiwidXNlcm5hbWUiOiJhZG1pbjAxIiwicm9sIjoiYWRtaW4iLCJpYXQiOjE3NDkyNDE1MjUsImV4cCI6MTc0OTMyNzkyNX0.P6TVRGzVGE2CKKNPUpYeKJW9XOLSFG92v7UhVKGF0IJOMoWzehAH6BW1t6ifaAhf1CAN2z7-lowqbR7Ifw6b2A",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_venta\": 1,\r\n  \"direccion_envio\": \"Sede Duoc maipu\",\r\n  \"fecha_envio\": \"2025-06-06T20:10:50.551Z\",\r\n  \"fecha_entrega\": \"2025-06-06T20:10:50.551Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/envios",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"envios"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultar envio por ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/envios/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"envios",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consutar envio por id Venta",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/envios/venta/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"envios",
+										"venta",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Crear un nuevo envio",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjAxIiwidXNlcm5hbWUiOiJhZG1pbjAxIiwicm9sIjoiYWRtaW4iLCJpYXQiOjE3NDkyNDI1MTAsImV4cCI6MTc0OTMyODkxMH0.Of9AsUq8GSy6arAGi19G9v_YYptcyaKAd3siPHBd99k2-5T9sGb9wPOsWMCIIZs92KDT4qcCved8JNdM0K9eWg",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id_venta\": 1,\r\n  \"direccion_envio\": \"string\",\r\n  \"estado_envio\": \"string\",\r\n  \"fecha_envio\": \"2025-06-06T20:37:35.090Z\",\r\n  \"fecha_entrega\": \"2025-06-06T20:37:35.091Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/envios",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"envios"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Api Vendedor",
+					"item": [
+						{
+							"name": "Crear vendedor",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/vendedores",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"vendedores"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ver todos los vendedores",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/vendedores",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"vendedores"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ver vendedor por ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/vendedores/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"vendedores",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actualizar Vendedor por ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/vendedores/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"vendedores",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar Vendedor por ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8888/api/proxy/vendedores/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"proxy",
+										"vendedores",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
