@@ -37,7 +37,7 @@ private final InventarioService inventarioService;
     }
 
     @GetMapping("/{id}")    // Consultar inventario por ID
-    public ResponseEntity<?> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable Integer id) {
         Optional<Inventario> inventario = inventarioService.findById(id);
         if (inventario.isPresent()) {
             return ResponseEntity.ok(inventario.get());
@@ -54,7 +54,7 @@ private final InventarioService inventarioService;
 
    
     @PutMapping("{id}")     // Ajustar inventario por ID
-        public ResponseEntity<Inventario> ActualizarInventario(@PathVariable Long id, @RequestBody Inventario inventario) {
+        public ResponseEntity<Inventario> ActualizarInventario(@PathVariable Integer id, @RequestBody Inventario inventario) {
             Inventario inventarioActualizado = inventarioService.ActualizarInventario(id, inventario);
             return ResponseEntity.ok(inventarioActualizado);
         }
@@ -62,7 +62,7 @@ private final InventarioService inventarioService;
     
 
     @DeleteMapping("/{id}")         // Eliminar inventario por ID
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
         if (inventarioService.findById(id).isPresent()) {
             inventarioService.deleteById(id);
             return ResponseEntity.ok("Inventario eliminado exitosamente");

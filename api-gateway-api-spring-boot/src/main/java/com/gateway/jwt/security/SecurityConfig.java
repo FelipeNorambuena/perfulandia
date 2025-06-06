@@ -16,7 +16,8 @@ import static com.gateway.jwt.security.PublicRoutes.*; //importa las rutas publi
 import static com.gateway.redireccion.gestion.GestionPublicRoutes.*; //importa las rutas publicas de API Gateway
 import static com.gateway.redireccion.productos.ProductosPublicRoutes.*; //importa las rutas publicas de API Productos
 import static com.gateway.redireccion.clientes.ClientesPublicRoutes.*; //importa las rutas publicas de API Clientes
-
+import static com.gateway.redireccion.envios.EnvioPublicRoutes.*; //importa las rutas publicas de API Envios
+import static com.gateway.redireccion.vendedor.VendedorPublicRoutes.*; //importa las rutas publicas de API Vendedores
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -40,6 +41,12 @@ public class SecurityConfig {
 
                 // URL públicas API Clientes
                 .requestMatchers(HttpMethod.GET, CLIENTES_PUBLIC_GET).permitAll()   // lista pública api Clientes GET
+
+                // URL públicas API Envios
+                .requestMatchers(HttpMethod.GET, ENVIO_PUBLIC_GET).permitAll()   // lista pública api Envios GET
+
+                // URL públicas API Vendedores
+                .requestMatchers(HttpMethod.GET, VENDEDOR_PUBLIC_GET).permitAll()   // lista pública api Vendedores GET
                 
                 // Otras URL Token obligatorio
                 .anyRequest().authenticated()
