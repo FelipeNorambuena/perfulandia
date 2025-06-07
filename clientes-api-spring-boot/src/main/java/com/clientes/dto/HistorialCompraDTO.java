@@ -1,14 +1,14 @@
 package com.clientes.dto;
 
 import lombok.Data;
-
+import java.time.LocalDateTime;
 
 @Data
 public class HistorialCompraDTO {
-    private Integer id_historial;
-    private Integer id_producto;
-    private Integer id_cliente;
-    private Integer id_vendedor;
-    private Integer id_venta;
-
+    private Integer idHistorial;
+    private Integer idProducto;
+    private Integer idCliente;
+    private Integer idVendedor;
+    private Integer idVenta;
+    private LocalDateTime fechaVenta; // Solo para mostrar, viene de la tabla ventas
 }

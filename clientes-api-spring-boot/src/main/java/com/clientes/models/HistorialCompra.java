@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 
+
 @Entity
 @Table(name = "historial_compras")
 @Data
@@ -15,11 +16,19 @@ public class HistorialCompra {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_historial;
-    
-    private Integer id_producto;
-    private Integer id_cliente;
-    private Integer id_vendedor;
-    private Integer id_venta;
-    
+    private Integer idHistorial;
+
+    @Column(name = "id_producto", nullable = false)
+    private Integer idProducto;
+
+    @Column(name = "id_cliente", nullable = false)
+    private Integer idCliente;
+
+    @Column(name = "id_vendedor", nullable = false)
+    private Integer idVendedor;
+
+    @Column(name = "id_venta", nullable = false)
+    private Integer idVenta;
+
+    // Ya no incluyas fechaVenta aquí, solo en el DTO si lo necesitas mostrar
 }
