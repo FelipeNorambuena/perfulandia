@@ -54,4 +54,12 @@ public class VendedorController {
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.notFound().build();
     }
+
+        
+    @GetMapping("/{id}/metas")
+    public ResponseEntity<VendedorDTO> obtenerMetas(@PathVariable Integer id) {
+    return service.obtenerMetasPorVendedor(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
 }

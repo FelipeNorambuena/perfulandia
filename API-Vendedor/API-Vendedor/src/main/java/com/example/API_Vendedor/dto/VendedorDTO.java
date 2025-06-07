@@ -10,5 +10,6 @@ public class VendedorDTO {
     private String nombre_completo;
     private String rut;
     private String area_ventas;
+    private int meta;
 
 }

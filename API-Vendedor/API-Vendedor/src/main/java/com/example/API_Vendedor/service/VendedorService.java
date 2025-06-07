@@ -75,4 +75,12 @@ public class VendedorService {
         return Vendedor;
     }
 
+
+    public Optional<VendedorDTO> obtenerMetasPorVendedor(Integer id) {
+    return repository.findById(id)
+            .map(this::toDTO); // O ajusta para devolver solo la meta si lo prefieres
+    }
+
+    
+
 }
