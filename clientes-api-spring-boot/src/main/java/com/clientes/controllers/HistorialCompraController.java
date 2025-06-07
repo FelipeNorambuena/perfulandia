@@ -20,27 +20,27 @@ public class HistorialCompraController {
         return service.getAll();
     }
 
-    @GetMapping("/cliente/{idCliente}")     // Endpoint para obtener historial de compras por cliente
+    @GetMapping("/cliente/{idCliente}")
     public List<HistorialCompraDTO> getByCliente(@PathVariable Integer idCliente) {
         return service.getByCliente(idCliente);
     }
 
-    @GetMapping("/{id}")            // Endpoint para obtener historial de compra por ID
+    @GetMapping("/{id}")
     public Optional<HistorialCompraDTO> getById(@PathVariable Integer id) {
         return service.getById(id);
     }
 
-    @PostMapping        // Endpoint para crear un nuevo historial de compra
+    @PostMapping
     public HistorialCompraDTO create(@RequestBody HistorialCompraDTO dto) {
         return service.create(dto);
     }
 
-    @PutMapping("/{id}")        // Endpoint para actualizar un historial de compra existente
+    @PutMapping("/{id}")
     public HistorialCompraDTO update(@PathVariable Integer id, @RequestBody HistorialCompraDTO dto) {
         return service.update(id, dto);
     }
 
-    @DeleteMapping("/{id}")     //  Endpoint para eliminar un historial de compra por ID
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         service.delete(id);
     }

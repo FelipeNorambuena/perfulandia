@@ -1,4 +1,5 @@
 package com.clientes.services;
+
 import com.clientes.dto.HistorialCompraDTO;
 import com.clientes.models.HistorialCompra;
 import com.clientes.repository.HistorialCompraRepository;
@@ -12,31 +13,26 @@ import java.util.stream.Collectors;
 @Service
 public class HistorialCompraService {
 
-
-
-
-
     @Autowired
     private HistorialCompraRepository repository;
 
     private HistorialCompraDTO toDTO(HistorialCompra entity) {
         HistorialCompraDTO dto = new HistorialCompraDTO();
-        dto.setId_historial(entity.getId_historial());
-        dto.setId_producto(entity.getId_producto());
-        dto.setId_cliente(entity.getId_cliente());
-        dto.setId_vendedor(entity.getId_vendedor());
-        dto.setId_venta(entity.getId_venta());
+        dto.setIdHistorial(entity.getIdHistorial());
+        dto.setIdProducto(entity.getIdProducto());
+        dto.setIdCliente(entity.getIdCliente());
+        dto.setIdVendedor(entity.getIdVendedor());
+        dto.setIdVenta(entity.getIdVenta());
         return dto;
     }
 
     private HistorialCompra toEntity(HistorialCompraDTO dto) {
         HistorialCompra entity = new HistorialCompra();
-        entity.setId_historial(dto.getId_historial());
-        entity.setId_producto(dto.getId_producto());
-        entity.setId_cliente(dto.getId_cliente());
-        entity.setId_vendedor(dto.getId_vendedor());
-        entity.setId_venta(dto.getId_venta());
-        
+        entity.setIdHistorial(dto.getIdHistorial());
+        entity.setIdProducto(dto.getIdProducto());
+        entity.setIdCliente(dto.getIdCliente());
+        entity.setIdVendedor(dto.getIdVendedor());
+        entity.setIdVenta(dto.getIdVenta());
         return entity;
     }
 
@@ -54,13 +50,15 @@ public class HistorialCompraService {
 
     public HistorialCompraDTO create(HistorialCompraDTO dto) {
         HistorialCompra entity = toEntity(dto);
-        return toDTO(repository.save(entity));
+        entity = repository.save(entity);
+        return toDTO(entity);
     }
 
     public HistorialCompraDTO update(Integer id, HistorialCompraDTO dto) {
-        dto.setId_historial(id);
+        dto.setIdHistorial(id);
         HistorialCompra entity = toEntity(dto);
-        return toDTO(repository.save(entity));
+        entity = repository.save(entity);
+        return toDTO(entity);
     }
 
     public void delete(Integer id) {
