@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class VendedorProxyController {
     
-        private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
     private final JwtService jwtService;
 
     @RequestMapping(value = "/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})       
