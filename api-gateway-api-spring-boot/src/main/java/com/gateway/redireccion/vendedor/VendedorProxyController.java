@@ -36,7 +36,7 @@ public class VendedorProxyController {
                                             @RequestHeader HttpHeaders headers) {
 
         String originalPath = request.getRequestURI().replace("/api/proxy/vendedor", "");
-        String targetUrl = "http://localhost:8085/api/vendedor" + originalPath;
+        String targetUrl = "http://localhost:8085/api/vendedores" + originalPath;
         HttpMethod method = HttpMethod.valueOf(request.getMethod());
 
         // Validar DELETE solo si no es admin
