@@ -12,8 +12,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 
 public class Reporte {
-
-    private int id_reporte;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id_reporte;
     private String tipo_reporte;
     private String fecha_generacion;
     private String descripcion;

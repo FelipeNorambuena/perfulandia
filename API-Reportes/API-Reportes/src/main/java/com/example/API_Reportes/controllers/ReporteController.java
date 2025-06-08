@@ -1,49 +1,43 @@
 package com.example.API_Reportes.controllers;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.example.API_Reportes.models.Reporte;
+import com.example.API_Reportes.dto.ReporteDTO;
 import com.example.API_Reportes.service.ReporteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/reportes")
-
-
-
 public class ReporteController {
+
     @Autowired
     private ReporteService reporteService;
 
+    @PostMapping
+    public ResponseEntity<ReporteDTO> crear(@RequestBody ReporteDTO dto) {
+        return ResponseEntity.ok(reporteService.crear(dto));
+    }
+
     @GetMapping
-    public List<Reporte> getAllReportes() {
-        return reporteService.getAllReportes();
+    public ResponseEntity<List<ReporteDTO>> listar() {
+        return ResponseEntity.ok(reporteService.listar());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Reporte> getReporteById(@PathVariable int id) {
-        Optional<Reporte> reporte = reporteService.getReporteById(id);
-        return reporte.map(ResponseEntity::ok)
-                      .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ReporteDTO> obtener(@PathVariable Integer id) {
+        return ResponseEntity.ok(reporteService.obtenerPorId(id));
     }
 
-    @PostMapping
-    public Reporte createReporte(@RequestBody Reporte reporte) {
-        return reporteService.saveReporte(reporte);
+    @PutMapping("/{id}")
+    public ResponseEntity<ReporteDTO> actualizar(@PathVariable Integer id, @RequestBody ReporteDTO dto) {
+        return ResponseEntity.ok(reporteService.actualizar(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteReporte(@PathVariable int id) {
-        reporteService.deleteReporte(id);
+    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
+        reporteService.eliminar(id);
         return ResponseEntity.noContent().build();
     }
-
 }
