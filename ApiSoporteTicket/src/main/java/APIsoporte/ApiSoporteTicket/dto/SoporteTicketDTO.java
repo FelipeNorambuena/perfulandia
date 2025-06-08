@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class SoporteTicketDTO {
 
-        private int id_ticket;
+        private Integer id_ticket;
         private String tipo_ticket;
         private String descripcion;
         private String estado;	
