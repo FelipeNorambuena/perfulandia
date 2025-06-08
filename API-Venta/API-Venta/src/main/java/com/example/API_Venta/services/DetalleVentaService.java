@@ -2,6 +2,9 @@ package com.example.API_Venta.services;
 
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,4 +64,18 @@ public class DetalleVentaService {
     public void eliminar(Integer id) {      // Elimina un DetalleVenta por su ID
         detallerepository.deleteById(id);
     }
+
+    public List<DetalleVentaDTO> listarTodos() {    // Devuelve todos los DetalleVenta como lista de DTO
+        List<DetalleVenta> detalles = detallerepository.findAll();
+        return detalles.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public DetalleVentaDTO obtenerPorId(Integer id) {   // Devuelve un DetalleVentaDTO por su ID
+        DetalleVenta detalle = detallerepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("DetalleVenta no encontrado"));
+        return toDTO(detalle);
+    }
 }
+

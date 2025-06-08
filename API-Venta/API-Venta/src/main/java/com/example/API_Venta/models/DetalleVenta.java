@@ -1,8 +1,6 @@
 package com.example.API_Venta.models;
 
 
-
-
 import jakarta.persistence.*;
 import lombok.*;
 
