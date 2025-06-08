@@ -13,8 +13,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 
 public class SoporteTicket {
-
-    	private int id_ticket;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "id_ticket")
+    	private Integer id_ticket;
         private String tipo_ticket;
         private String descripcion;
         private String estado;	
