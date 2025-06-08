@@ -21,6 +21,7 @@ import static com.gateway.redireccion.vendedor.VendedorPublicRoutes.*; //importa
 import static com.gateway.redireccion.ventas.VentasPublicRoutes.*; //importa las rutas publicas de API Ventas
 import static com.gateway.redireccion.reportes.ReportePublicRoutes.*; //importa las rutas publicas de API Reportes
 import static com.gateway.redireccion.soporte.SoportePublicRoutes.*; //importa las rutas publicas de API Soporte
+import static com.gateway.redireccion.inventario.InventarioPublicRoutes.*; //importa las rutas publicas de API Inventario
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -59,6 +60,9 @@ public class SecurityConfig {
 
                 // URL públicas de API soporte
                 .requestMatchers(HttpMethod.GET, SOPORTE_PUBLIC_GET).permitAll()   // lista pública api Soporte GET
+
+                // URL públicas de API inventario
+                .requestMatchers(HttpMethod.GET, INVENTARIO_PUBLIC_GET).permitAll()   // lista pública api Inventario GET
 
                 // Otras URL Token obligatorio
                 .anyRequest().authenticated()

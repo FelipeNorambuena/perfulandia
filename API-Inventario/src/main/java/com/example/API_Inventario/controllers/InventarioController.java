@@ -1,75 +1,56 @@
 package com.example.API_Inventario.controllers;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.API_Inventario.models.Inventario;
+import com.example.API_Inventario.dto.InventarioDTO;
 import com.example.API_Inventario.service.InventarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-
-
-import org.springframework.web.bind.annotation.PutMapping;
-
-
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/inventario")
 public class InventarioController {
 
-private final InventarioService inventarioService;
+    @Autowired
+    private InventarioService inventarioService;
 
-    public InventarioController(InventarioService inventarioService) {
-        this.inventarioService = inventarioService;
+    @PostMapping        // Crear un nuevo inventario
+    public ResponseEntity<InventarioDTO> crear(@RequestBody InventarioDTO dto) {
+        return ResponseEntity.ok(inventarioService.crear(dto));
     }
 
-    @GetMapping // Consultar todos los inventarios
-    public ResponseEntity<List<Inventario>> getAll() {
-        return ResponseEntity.ok(inventarioService.findAll());
+    @GetMapping     // Listar todos los inventarios
+    public ResponseEntity<List<InventarioDTO>> listar() {
+        return ResponseEntity.ok(inventarioService.listar());
     }
 
-    @GetMapping("/{id}")    // Consultar inventario por ID
-    public ResponseEntity<?> getById(@PathVariable Integer id) {
-        Optional<Inventario> inventario = inventarioService.findById(id);
-        if (inventario.isPresent()) {
-            return ResponseEntity.ok(inventario.get());
-        } else {
-            return ResponseEntity.status(404).body("Inventario no encontrado");
-        }
-    }
-  
-    @PostMapping  // Crear nuevo inventario
-    public ResponseEntity<Inventario> CrearInventario(@RequestBody Inventario inventario) {
-        Inventario nuevoInventario = inventarioService.CrearInventario(inventario);
-        return ResponseEntity.status(201).body(nuevoInventario);
+    @GetMapping("/{id}")        // Obtener un inventario por ID
+    public ResponseEntity<InventarioDTO> obtener(@PathVariable Integer id) {
+        return ResponseEntity.ok(inventarioService.obtenerPorId(id));
     }
 
-   
-    @PutMapping("{id}")     // Ajustar inventario por ID
-        public ResponseEntity<Inventario> ActualizarInventario(@PathVariable Integer id, @RequestBody Inventario inventario) {
-            Inventario inventarioActualizado = inventarioService.ActualizarInventario(id, inventario);
-            return ResponseEntity.ok(inventarioActualizado);
-        }
+    @PutMapping("/{id}")        // Actualizar un inventario existente
+    public ResponseEntity<InventarioDTO> actualizar(@PathVariable Integer id, @RequestBody InventarioDTO dto) {
+        return ResponseEntity.ok(inventarioService.actualizar(id, dto));
+    }
 
-    
-
-    @DeleteMapping("/{id}")         // Eliminar inventario por ID
-    public ResponseEntity<String> delete(@PathVariable Integer id) {
-        if (inventarioService.findById(id).isPresent()) {
-            inventarioService.deleteById(id);
-            return ResponseEntity.ok("Inventario eliminado exitosamente");
-        }
-        return ResponseEntity.status(404).body("Inventario no encontrado");
+    @DeleteMapping("/{id}")     // Eliminar un inventario por ID
+    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
+        inventarioService.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
 
     
+    @GetMapping("/ubicacion/{ubicacionBodega}")     // Buscar inventario por ubicación de bodega
+    public ResponseEntity<List<InventarioDTO>> buscarPorUbicacionBodega(@PathVariable String ubicacionBodega) {
+        return ResponseEntity.ok(inventarioService.buscarPorUbicacionBodega(ubicacionBodega));
+    }
+
+    
+    @GetMapping("/producto/{idProducto}")       // Buscar inventario por ID de producto
+    public ResponseEntity<List<InventarioDTO>> buscarPorIdProducto(@PathVariable Integer idProducto) {
+        return ResponseEntity.ok(inventarioService.buscarPorIdProducto(idProducto));
+    }
 }
 

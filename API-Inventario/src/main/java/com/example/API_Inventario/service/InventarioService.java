@@ -1,49 +1,83 @@
 package com.example.API_Inventario.service;
 
 import com.example.API_Inventario.models.Inventario;
-
 import com.example.API_Inventario.repository.InventarioRepository;
+import com.example.API_Inventario.dto.InventarioDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class InventarioService {
-    private final InventarioRepository inventarioRepository;
 
-    public InventarioService(InventarioRepository inventarioRepository) {   // Constructor de la clase InventarioService
-        this.inventarioRepository = inventarioRepository;
+    @Autowired
+    private InventarioRepository inventarioRepository;
+
+    private InventarioDTO toDTO(Inventario inventario) {
+        return new InventarioDTO(
+                inventario.getId_inventario(),
+                inventario.getId_producto(),
+                inventario.getStock_disponible(),
+                inventario.getUbicacion_bodega()
+        );
     }
 
-    public List<Inventario> findAll() {     // Método para obtener todos los inventarios
-        return inventarioRepository.findAll();
+    private Inventario toEntity(InventarioDTO dto) {
+        Inventario inventario = new Inventario();
+        inventario.setId_inventario(dto.getId_inventario());
+        inventario.setId_producto(dto.getId_producto());
+        inventario.setStock_disponible(dto.getStock_disponible());
+        inventario.setUbicacion_bodega(dto.getUbicacion_bodega());
+        return inventario;
     }
 
-    public Optional<Inventario> findById(Integer id) {     // Método para buscar un inventario por su ID
-        return inventarioRepository.findById(id);
+    public InventarioDTO crear(InventarioDTO dto) {
+        Inventario inventario = toEntity(dto);
+        return toDTO(inventarioRepository.save(inventario));
     }
 
-
-    public Inventario save(Inventario inventario) {  // Método para guardar un nuevo inventario
-        return inventarioRepository.save(inventario);       // Guardar un nuevo inventario
+    public List<InventarioDTO> listar() {
+        return inventarioRepository.findAll().stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public void deleteById(Integer id) {
-        inventarioRepository.deleteById(id);        // Eliminar un inventario por su ID
+    public InventarioDTO obtenerPorId(Integer id) {
+        Inventario inventario = inventarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Inventario no encontrado"));
+        return toDTO(inventario);
     }
 
-    public Inventario ActualizarInventario(Integer id, Inventario inventario) {
-        Inventario inventarioExistente = inventarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Inventario no encontrado con ID: " + id));
-        inventarioExistente.setStock_disponible(inventario.getStock_disponible());
-        inventarioExistente.setUbicacion_bodega(inventario.getUbicacion_bodega());
-        inventarioExistente.setId_producto(inventario.getId_producto());
-        return inventarioRepository.save(inventarioExistente);
+    public InventarioDTO actualizar(Integer id, InventarioDTO dto) {
+        Inventario existente = inventarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Inventario no encontrado"));
+
+        existente.setId_producto(dto.getId_producto());
+        existente.setStock_disponible(dto.getStock_disponible());
+        existente.setUbicacion_bodega(dto.getUbicacion_bodega());
+
+        return toDTO(inventarioRepository.save(existente));
     }
 
-    public Inventario CrearInventario(Inventario inventario) {
-        return inventarioRepository.save(inventario);  // Método para crear un nuevo inventario
+    public void eliminar(Integer id) {
+        inventarioRepository.deleteById(id);
     }
 
+    // Buscar inventario por ubicación de bodega
+    public List<InventarioDTO> buscarPorUbicacionBodega(String ubicacionBodega) {
+        return inventarioRepository.findAll().stream()
+                .filter(inv -> inv.getUbicacion_bodega().equalsIgnoreCase(ubicacionBodega))
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    // Buscar inventario por id de producto
+    public List<InventarioDTO> buscarPorIdProducto(Integer idProducto) {
+        return inventarioRepository.findAll().stream()
+                .filter(inv -> inv.getId_producto().equals(idProducto))
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
 }
