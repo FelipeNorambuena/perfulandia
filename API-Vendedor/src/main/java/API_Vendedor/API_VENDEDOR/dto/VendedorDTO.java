@@ -1,8 +1,9 @@
-package com.example.API_Vendedor.dto;
+package API_Vendedor.API_VENDEDOR.dto;
 
 import lombok.Data;
 
 @Data
+
 public class VendedorDTO {
 
     private Integer id_vendedor;
@@ -10,6 +11,5 @@ public class VendedorDTO {
     private String nombre_completo;
     private String rut;
     private String area_ventas;
-    private int meta;
-
+    private Integer meta;
 }

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ApiEnviosApplication<API-Envios>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.API_Envios.ApiEnviosApplication",
+            "projectName": "API-Envios",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

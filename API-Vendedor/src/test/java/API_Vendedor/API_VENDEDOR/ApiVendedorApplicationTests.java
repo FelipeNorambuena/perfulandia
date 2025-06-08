@@ -1,4 +1,4 @@
-package com.example.API_Vendedor;
+package API_Vendedor.API_VENDEDOR;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

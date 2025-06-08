@@ -1,9 +1,9 @@
-package com.example.API_Vendedor;
+package API_Vendedor.API_VENDEDOR;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = {"com.example"})
+@SpringBootApplication
 public class ApiVendedorApplication {
 
 	public static void main(String[] args) {
