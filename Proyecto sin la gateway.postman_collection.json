@@ -2003,6 +2003,278 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Api Vendedor",
+			"item": [
+				{
+					"name": "Ver vendedores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/vendedores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"vendedores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver vendedores por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/vendedores/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"vendedores",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver metas por sucursal (areaVentas)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/vendedores/metas/{areaVentas}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"vendedores",
+								"metas",
+								"{areaVentas}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver vendedores por sucursal",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/vendedores/area/{areaVentas}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"vendedores",
+								"area",
+								"{areaVentas}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear un vendedor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id_usuario\": 0,\r\n  \"nombre_completo\": \"string\",\r\n  \"rut\": \"string\",\r\n  \"area_ventas\": \"string\",\r\n  \"meta\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/vendedores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"vendedores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear un vendedor Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id_usuario\": 0,\r\n  \"nombre_completo\": \"string\",\r\n  \"rut\": \"string\",\r\n  \"area_ventas\": \"string\",\r\n  \"meta\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/vendedores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"vendedores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar un vendedor por ID",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id_usuario\": 0,\r\n  \"nombre_completo\": \"string\",\r\n  \"rut\": \"string\",\r\n  \"area_ventas\": \"string\",\r\n  \"meta\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/vendedores/{Id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"vendedores",
+								"{Id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar un vendedor por ID",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id_usuario\": 0,\r\n  \"nombre_completo\": \"string\",\r\n  \"rut\": \"string\",\r\n  \"area_ventas\": \"string\",\r\n  \"meta\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/vendedores/{ID}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"vendedores",
+								"{ID}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar meta de un vendedor por ID",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id_usuario\": 0,\r\n  \"nombre_completo\": \"string\",\r\n  \"rut\": \"string\",\r\n  \"area_ventas\": \"string\",\r\n  \"meta\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/vendedores/{id}/meta",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"vendedores",
+								"{id}",
+								"meta"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
