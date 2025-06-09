@@ -1,65 +1,93 @@
 package com.example.API_Envios.service;
 
-import java.util.*;
-
-import org.springframework.http.ResponseEntity;
+import com.example.API_Envios.dto.EnvioDTO;
+import com.example.API_Envios.models.*;
+import com.example.API_Envios.repository.EnvioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.API_Envios.models.Envio;
-import com.example.API_Envios.repository.EnvioRepository;
-
-
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EnvioService {
-    private final EnvioRepository envioRepository;
 
-    public EnvioService(EnvioRepository envioRepository) {  // Constructor injection for EnvioRepository
-        this.envioRepository = envioRepository;
-    }
-    
-    public Envio createEnvio(Envio envio) {
-        return envioRepository.save(envio);  // guardar el envio en la base de datos
+    @Autowired
+    private EnvioRepository envioRepository;
+
+    private EnvioDTO toDTO(Envio envio) {       // convertir entidad Envio a DTO EnvioDTO
+        return new EnvioDTO(
+                envio.getId_envio(),
+                envio.getId_venta(),
+                envio.getDireccion_envio(),
+                envio.getEstado_envio(),
+                envio.getFecha_envio(),
+                envio.getFecha_entrega()
+        );
     }
 
-    public List<Envio> getAllEnvios() {
-        return envioRepository.findAll();  // obtener todos los envios de la base de datos
+    private Envio toEntity(EnvioDTO dto) {      // convertir DTO EnvioDTO a entidad Envio
+        Envio envio = new Envio();
+        envio.setId_envio(dto.getId_envio());
+        envio.setId_venta(dto.getId_venta());
+        envio.setDireccion_envio(dto.getDireccion_envio());
+        envio.setEstado_envio(dto.getEstado_envio());
+        envio.setFecha_envio(dto.getFecha_envio());
+        envio.setFecha_entrega(dto.getFecha_entrega());
+        return envio;
     }
 
-    public ResponseEntity<?> getEnvioById(Integer id) {  // obtener un envio por su ID
+    public EnvioDTO crear(EnvioDTO dto) {       // crear un nuevo envio
+        Envio envio = toEntity(dto);
+        return toDTO(envioRepository.save(envio));
+    }
+
+    public List<EnvioDTO> listar() {        // listar todos los envíos
+        return envioRepository.findAll().stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public EnvioDTO obtenerPorId(Integer id) {  // obtener un envio por su ID
         Optional<Envio> envio = envioRepository.findById(id);
         if (envio.isPresent()) {
-            return ResponseEntity.ok(envio.get());
+            return toDTO(envio.get());
         } else {
-            return ResponseEntity.status(404).body("Envío no encontrado");
+            return null;
         }
     }
 
-    public Envio updateEnvio(Integer id, Envio envioDetails) {      // actualizar un envio existente
-        Envio envio = envioRepository.findById(id).orElse(null);
-        if (envio != null) {
-            envio.setId_venta(envioDetails.getId_venta());
-            envio.setDireccion_envio(envioDetails.getDireccion_envio());
-            envio.setFecha_envio(envioDetails.getFecha_envio());
-            envio.setFecha_entrega(envioDetails.getFecha_entrega());
-            return envioRepository.save(envio);  // actualizar el envio en la base de datos
-        } else {
-            return null; 
-        }
+    public EnvioDTO actualizar(Integer id, EnvioDTO dto) {      // actualizar un envio existente
+        Envio existente = envioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Envío no encontrado"));
+
+        existente.setId_venta(dto.getId_venta());
+        existente.setDireccion_envio(dto.getDireccion_envio());
+        existente.setEstado_envio(dto.getEstado_envio());
+        existente.setFecha_envio(dto.getFecha_envio());
+        existente.setFecha_entrega(dto.getFecha_entrega());
+
+        return toDTO(envioRepository.save(existente));
     }
 
-    public void deleteEnvio(Integer id) {
-        envioRepository.deleteById(id);  // eliminar un envio por su ID
+    public void eliminar(Integer id) {      // eliminar un envio por su ID
+        envioRepository.deleteById(id);
     }
-
-    public List<Envio> getEnviosByVentaId(Integer id_venta) {
-        return envioRepository.findAll().stream()
-                .filter(envio -> envio.getId_venta().equals(id_venta))
-                .toList();  // obtener envios por ID de venta
-    }
-
-
 
     
+    public List<EnvioDTO> buscarPorEstado(String estado) {  // buscar envíos por estado
+        return envioRepository.findAll().stream()    
+                .filter(envio -> envio.getEstado_envio().equalsIgnoreCase(estado))
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
 
+    
+    public List<EnvioDTO> buscarPorIdVenta(Integer idVenta) {       // buscar envíos por ID de venta
+        return envioRepository.findAll().stream()
+                .filter(envio -> envio.getId_venta().equals(idVenta))
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
 }
