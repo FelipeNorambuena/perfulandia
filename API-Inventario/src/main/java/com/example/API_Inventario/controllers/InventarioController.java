@@ -89,6 +89,22 @@ public class InventarioController {
 
     return lista;
     }
+    @PutMapping("/hateoas/{id}")
+    public InventarioDTO actualizarHATEOAS(@PathVariable Integer id, @RequestBody InventarioDTO dto) {
+    InventarioDTO actualizado = inventarioService.actualizar(id, dto);
+
+    // Links de la misma API
+    actualizado.add(linkTo(methodOn(InventarioController.class).obtenerHATEOAS(id)).withSelfRel());
+    actualizado.add(linkTo(methodOn(InventarioController.class).listar()).withRel("todos"));
+    actualizado.add(linkTo(methodOn(InventarioController.class).eliminar(id)).withRel("eliminar"));
+
+    // Links HATEOAS para API Gateway (ejemplo)
+    actualizado.add(org.springframework.hateoas.Link.of("http://localhost:8888/api/proxy/inventario/" + actualizado.getId_inventario()).withSelfRel());
+    actualizado.add(org.springframework.hateoas.Link.of("http://localhost:8888/api/proxy/inventario/" + actualizado.getId_inventario()).withRel("Modificar HATEOAS").withType("PUT"));
+    actualizado.add(org.springframework.hateoas.Link.of("http://localhost:8888/api/proxy/inventario/" + actualizado.getId_inventario()).withRel("Eliminar HATEOAS").withType("DELETE"));
+
+    return actualizado;
+    }
 
 }
 
