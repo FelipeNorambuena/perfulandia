@@ -33,7 +33,7 @@ public class InventarioProxyController {
                                             @RequestHeader HttpHeaders headers) {
 
         String originalPath = request.getRequestURI().replace("/api/proxy/inventario", "");
-        String targetUrl = "http://localhost:8084/api/inventario" + originalPath;
+        String targetUrl = "http://localhost:8091/api/inventario" + originalPath;
         HttpMethod method = HttpMethod.valueOf(request.getMethod());
 
         // Validar DELETE solo si no es admin
