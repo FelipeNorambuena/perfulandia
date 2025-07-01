@@ -20,6 +20,8 @@ import com.gestion.models.Usuario;
 import com.gestion.services.UsuarioService;
 
 import lombok.RequiredArgsConstructor;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import org.springframework.hateoas.Link;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -60,5 +62,77 @@ public class UsuarioController {
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
         service.eliminarUsuario(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // MÉTODOS HATEOAS
+
+    @GetMapping("/hateoas/{id}")
+    public ResponseEntity<UsuarioDTO> obtenerHATEOAS(@PathVariable Integer id) {
+        try {
+            UsuarioDTO dto = service.buscarUsuarioPorId(id);
+            dto.add(linkTo(methodOn(UsuarioController.class).obtenerHATEOAS(id)).withSelfRel());
+            dto.add(linkTo(methodOn(UsuarioController.class).obtenerTodosHATEOAS()).withRel("todos"));
+            dto.add(linkTo(methodOn(UsuarioController.class).eliminarHATEOAS(id)).withRel("eliminar"));
+            dto.add(Link.of("http://localhost:8888/api/proxy/usuarios/" + dto.getIdUsuario()).withSelfRel());
+            dto.add(Link.of("http://localhost:8888/api/proxy/usuarios/" + dto.getIdUsuario()).withRel("Modificar HATEOAS").withType("PUT"));
+            dto.add(Link.of("http://localhost:8888/api/proxy/usuarios/" + dto.getIdUsuario()).withRel("Eliminar HATEOAS").withType("DELETE"));
+            return ResponseEntity.ok(dto);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("/hateoas")
+    public ResponseEntity<List<UsuarioDTO>> obtenerTodosHATEOAS() {
+        List<UsuarioDTO> lista = service.listarUsuarios();
+        for (UsuarioDTO dto : lista) {
+            dto.add(linkTo(methodOn(UsuarioController.class).obtenerHATEOAS(dto.getIdUsuario())).withSelfRel());
+            dto.add(Link.of("http://localhost:8888/api/proxy/usuarios").withRel("Get todos HATEOAS"));
+            dto.add(Link.of("http://localhost:8888/api/proxy/usuarios/" + dto.getIdUsuario()).withRel("Crear HATEOAS").withType("POST"));
+        }
+        return ResponseEntity.ok(lista);
+    }
+
+    @PostMapping("/hateoas")
+    public ResponseEntity<UsuarioDTO> crearHATEOAS(@RequestBody CrearUsuarioRequest request) {
+        Usuario usuario = service.crearUsuario(request);
+        UsuarioDTO creado = service.buscarUsuarioPorId(usuario.getIdUsuario());
+        
+        // Agregar enlaces HATEOAS
+        creado.add(linkTo(methodOn(UsuarioController.class).obtenerHATEOAS(creado.getIdUsuario())).withSelfRel());
+        creado.add(linkTo(methodOn(UsuarioController.class).obtenerTodosHATEOAS()).withRel("todos"));
+        creado.add(linkTo(methodOn(UsuarioController.class).actualizarHATEOAS(creado.getIdUsuario(), creado)).withRel("actualizar"));
+        creado.add(linkTo(methodOn(UsuarioController.class).eliminarHATEOAS(creado.getIdUsuario())).withRel("eliminar"));
+        
+        // Enlaces proxy personalizados
+        creado.add(Link.of("http://localhost:8888/api/proxy/usuarios/" + creado.getIdUsuario()).withRel("self-proxy"));
+        creado.add(Link.of("http://localhost:8888/api/proxy/usuarios/" + creado.getIdUsuario()).withRel("Modificar HATEOAS").withType("PUT"));
+        creado.add(Link.of("http://localhost:8888/api/proxy/usuarios/" + creado.getIdUsuario()).withRel("Eliminar HATEOAS").withType("DELETE"));
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(creado);
+    }
+
+    @PutMapping("/hateoas/{id}")
+    public ResponseEntity<UsuarioDTO> actualizarHATEOAS(@PathVariable Integer id, @RequestBody UsuarioDTO dto) {
+        UsuarioDTO actualizado = service.actualizarUsuario(id, dto);
+        actualizado.add(linkTo(methodOn(UsuarioController.class).obtenerHATEOAS(id)).withSelfRel());
+        actualizado.add(linkTo(methodOn(UsuarioController.class).obtenerTodosHATEOAS()).withRel("todos"));
+        actualizado.add(linkTo(methodOn(UsuarioController.class).eliminarHATEOAS(id)).withRel("eliminar"));
+        actualizado.add(Link.of("http://localhost:8888/api/proxy/usuarios/" + actualizado.getIdUsuario()).withSelfRel());
+        actualizado.add(Link.of("http://localhost:8888/api/proxy/usuarios/" + actualizado.getIdUsuario()).withRel("Modificar HATEOAS").withType("PUT"));
+        actualizado.add(Link.of("http://localhost:8888/api/proxy/usuarios/" + actualizado.getIdUsuario()).withRel("Eliminar HATEOAS").withType("DELETE"));
+        return ResponseEntity.ok(actualizado);
+    }
+
+    @DeleteMapping("/hateoas/{id}")
+    public ResponseEntity<UsuarioDTO> eliminarHATEOAS(@PathVariable Integer id) {
+        service.eliminarUsuario(id);
+        UsuarioDTO eliminado = new UsuarioDTO();
+        eliminado.setIdUsuario(id);
+        eliminado.add(linkTo(methodOn(UsuarioController.class).obtenerTodosHATEOAS()).withRel("todos"));
+        eliminado.add(linkTo(methodOn(UsuarioController.class).crearHATEOAS(null)).withRel("crear"));
+        eliminado.add(Link.of("http://localhost:8888/api/proxy/usuarios").withRel("Get todos HATEOAS"));
+        eliminado.add(Link.of("http://localhost:8888/api/proxy/usuarios").withRel("Crear HATEOAS").withType("POST"));
+        return ResponseEntity.ok(eliminado);
     }
 }
