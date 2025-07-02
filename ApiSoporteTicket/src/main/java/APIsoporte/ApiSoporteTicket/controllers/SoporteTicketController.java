@@ -12,7 +12,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/soporte/tickets")
+@RequestMapping("/api/soporte")
 public class SoporteTicketController {
 
     @Autowired
